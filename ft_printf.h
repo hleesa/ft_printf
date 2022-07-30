@@ -14,5 +14,6 @@
 #define FT_PRINTF_H
 
 #include <stdarg.h>
+#include "libft/libft.h"
 
 #endif //FT_PRINTF_H
