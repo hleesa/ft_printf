@@ -36,7 +36,7 @@ void set_func_num(int *to_func_num)
 
 char*	c_func(va_list ap)
 {
-	char c = va_arg(ap, const char *);
+	const char c = va_arg(ap, char);	// char ok?
 	return (ft_itoa(c));
 }
 
@@ -47,21 +47,46 @@ char*	s_func(va_list ap)
 
 char*	p_func(va_list ap)
 {
+	unsigned long long	addr;
+	const char			*to_hex= "0123456789abcdef";
+	char				hex_addr[18];
+	int					idx;
 
+	addr = va_arg(ap, unsigned long long);
+	idx = 0;
+	while(idx < 18)
+		hex_addr[idx++] = 0;
+	idx = 17;
+	while(addr)
+	{
+		hex_addr[idx] = to_hex[addr%16];
+		addr /= 16;
+		--idx;
+	}
+	hex_addr[idx] = 'x';
+	hex_addr[idx - 1] = '0';
+	return (ft_strdup(hex_addr + idx - 1));
 }
 
 char*	d_func(va_list ap)
 {
+	int	d;
 
+	d = va_arg(ap, int);
+	return (ft_itoa(d));
 }
 
 char*	i_func(va_list ap)
 {
-
+	return (d_func(ap));
 }
+
 char*	u_func(va_list ap)
 {
+	unsigned int	u;
 
+	u = va_arg(ap, unsigned int);
+	return (ft_utoa(u));
 }
 char*	x_func(va_list ap)
 {
