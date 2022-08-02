@@ -16,4 +16,14 @@
 #include <stdarg.h>
 #include "libft/libft.h"
 
+char*	c_func(va_list ap);
+char*	s_func(va_list ap);
+char*	p_func(va_list ap);
+char*	d_func(va_list ap);
+char*	i_func(va_list ap);
+char*	u_func(va_list ap);
+char*	x_func(va_list ap);
+char*	X_func(va_list ap);
+char*	percnet_func(va_list ap);
+
 #endif //FT_PRINTF_H

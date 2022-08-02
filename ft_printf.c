@@ -20,11 +20,9 @@ void set_func_num(int *to_func_num)
 	const size_t	len = ft_strlen(conversions);
 
 	i = 0;
+//	ft_memset(to_func_num, -1, 256);
 	while (i < 256)
-	{
-		to_func_num[i] = -1;
-		++i;
-	}
+		to_func_num[i++] = -1;
 	i = 0;
 	while (i < len)
 	{
@@ -32,73 +30,6 @@ void set_func_num(int *to_func_num)
 		++i;
 	}
 	return;
-}
-
-char*	c_func(va_list ap)
-{
-	const char c = va_arg(ap, char);	// char ok?
-	return (ft_itoa(c));
-}
-
-char*	s_func(va_list ap)
-{
-	return (ft_strdup(va_arg(ap, const char *)));
-}
-
-char*	p_func(va_list ap)
-{
-	unsigned long long	addr;
-	const char			*to_hex= "0123456789abcdef";
-	char				hex_addr[18];
-	int					idx;
-
-	addr = va_arg(ap, unsigned long long);
-	idx = 0;
-	while(idx < 18)
-		hex_addr[idx++] = 0;
-	idx = 17;
-	while(addr)
-	{
-		hex_addr[idx] = to_hex[addr%16];
-		addr /= 16;
-		--idx;
-	}
-	hex_addr[idx] = 'x';
-	hex_addr[idx - 1] = '0';
-	return (ft_strdup(hex_addr + idx - 1));
-}
-
-char*	d_func(va_list ap)
-{
-	int	d;
-
-	d = va_arg(ap, int);
-	return (ft_itoa(d));
-}
-
-char*	i_func(va_list ap)
-{
-	return (d_func(ap));
-}
-
-char*	u_func(va_list ap)
-{
-	unsigned int	u;
-
-	u = va_arg(ap, unsigned int);
-	return (ft_utoa(u));
-}
-char*	x_func(va_list ap)
-{
-
-}
-char*	X_func(va_list ap)
-{
-
-}
-char*	percnet_func(va_list ap)
-{
-	return (ft_strdup("%"));
 }
 
 void set_num_to_func(char (*num_to_func[9])())
@@ -114,27 +45,31 @@ void set_num_to_func(char (*num_to_func[9])())
 	num_to_func[8] = percnet_func;
 	return;
 }
-int	ft_printf(const char * format, ...)
+
+int	ft_printf(const char *format, ...)
 {
-	int to_func_num[256];
-	char (*num_to_func[9])();
+	va_list			ap;
+	int				to_func_num[256];
+	char			(*num_to_func[9])();
+	size_t			idx;
+	size_t			pct_idx;
+	char			ret_str;
 
 	set_func_num(to_func_num);
 	set_num_to_func(num_to_func);
-
-	for(int i=0; i<256; ++i)
-	{
-		printf("%d %d\n", i, to_func_num[i]);
-	}
-	va_list ap;
 	va_start(ap, format);
-	c_func(ap);
-	printf("%c", 100);
-	printf("%s\n", format);
-	printf("%d\n", va_arg(ap, const char *));
-	printf("%s\n", va_arg(ap, const char *));
-	printf("%s\n", va_arg(ap, const char *));
-
+	idx = 0;
+	ret_str = 0;
+	while(idx < ft_strlen(format))
+	{
+		pct_idx = ft_strchr(format + idx, '%');
+		if (pct_idx == 0)
+		{
+			ret_str = ft_strjoin(ret_str, format + idx);
+			break;
+		}
+		ret_str = ft_strjoin(ret_str, pct_idx);
+	}
 	va_end(ap);
 	printf("\n");
 }
