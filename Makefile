@@ -10,9 +10,15 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftprintf.a
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
+NAME		= libftprintf.a
+LIBFTDIR	= ./libft
+LIBFTFILE	= libft.a
+
+CC			= cc
+CFLAGS		= -Wall -Wextra -Werror
+AR			= ar rcs
+RM			= rm -f
+
 SRCS = \
 	ft_printf.c \
 	ft_printf_manda_func_one.c \
@@ -23,19 +29,22 @@ OBJS_M = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS_M)
-	ar rcs $@ $?
+	make -C $(LIBFTDIR)
+	cp $(LIBFTDIR)/$(LIBFTFILE) $(NAME)
+	$(AR) $@ $?
 
-bonus: $(OBJS_B)
-	make OBJS_M="$(OBJS_B)"
+bonus:
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
-	rm -f $(OBJS_M) $(OBJS_B)
+	make -C $(LIBFTDIR) clean
+	$(RM) $(OBJS_M) $(OBJS_B)
 
 fclean: clean
-	rm -f $(NAME)
+	make -C $(LIBFTDIR) fclean
+	$(RM) $(NAME)
 
 re: fclean
 	make all

@@ -58,7 +58,7 @@ char	*xu_func(va_list ap)
 	return (ft_strdup(hex + idx));
 }
 
-char	*percnet_func(va_list ap)
+char	*percnet_func(void)
 {
 	return (ft_strdup("%"));
 }

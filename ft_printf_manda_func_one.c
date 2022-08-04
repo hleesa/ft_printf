@@ -16,7 +16,7 @@ char	*c_func(va_list ap)
 {
 	char	c;
 
-	c = va_arg(ap, char);
+	c = va_arg(ap, int);
 	return (ft_itoa(c));
 }
 

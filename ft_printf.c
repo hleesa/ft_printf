@@ -16,16 +16,14 @@
 void	set_func_num(int *to_func_num)
 {
 	size_t			i;
-	const  char		*conversions = "cspdiuxX%";
-	unsigned char	*cp = conversions;
-
+	const char		*conversions = "cspdiuxX%";
 	const size_t	len = ft_strlen(conversions);
 
 	ft_memset(to_func_num, -1, 256);
 	i = 0;
 	while (i < len)
 	{
-		to_func_num[cp[i]] = i;
+		to_func_num[((const unsigned char *)conversions)[i]] = i;
 		++i;
 	}
 	return ;
@@ -57,13 +55,14 @@ int	is_error(const char *format, int *to_func_num)
 	{
 		if (format[idx] == '%')
 		{
-			if (idx + 1 == len || to_func_num[format[idx]] == -1)
+			if (idx + 1 == len || to_func_num[((const unsigned char *)format)[idx]] == -1)
 				return (1);
 		}
 		++idx;
 	}
 	return (0);
 }
+
 
 int	ft_printf(const char *format, ...)
 {
@@ -83,7 +82,7 @@ int	ft_printf(const char *format, ...)
 	{
 		if (format[idx] == '%')
 		{
-			ft_putstr_fd(num_to_func[to_func_num[format[idx + 1]]](ap), 1);
+			ft_putstr_fd(num_to_func[to_func_num[((const unsigned char *)format)[idx + 1]]](ap), 1);
 			++idx;
 		}
 		else
@@ -92,12 +91,4 @@ int	ft_printf(const char *format, ...)
 	}
 	va_end(ap);
 	return (0);
-}
-
-int main()
-{
-	ft_printf("hello %d\n", 100);
-	printf("hello %d\n", 100);
-
-	return 0;
 }

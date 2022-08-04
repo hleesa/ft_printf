@@ -27,6 +27,6 @@ char	*i_func(va_list ap);
 char	*u_func(va_list ap);
 char	*xl_func(va_list ap);
 char	*xu_func(va_list ap);
-char	*percnet_func(va_list ap);
+char	*percnet_func(void);
 
 #endif //FT_PRINTF_H
