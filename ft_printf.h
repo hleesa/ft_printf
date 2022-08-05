@@ -6,7 +6,7 @@
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 20:01:24 by salee2            #+#    #+#             */
-/*   Updated: 2022/08/03 11:58:44 by salee2           ###   ########.fr       */
+/*   Updated: 2022/08/05 16:38:59 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,23 @@
 # include <stdarg.h>
 # include "libft/libft.h"
 
-# define HEX_ADDR_LEN 19
 # define HEX_LEN 9
+# define HEX_ADDR_LEN 19
 
-char	*c_func(va_list ap);
-char	*s_func(va_list ap);
-char	*p_func(va_list ap);
-char	*d_func(va_list ap);
-char	*i_func(va_list ap);
-char	*u_func(va_list ap);
-char	*xl_func(va_list ap);
-char	*xu_func(va_list ap);
-char	*percnet_func(void);
+ssize_t	c_func(va_list ap);
+ssize_t	s_func(va_list ap);
+ssize_t	p_func(va_list ap);
+ssize_t	d_func(va_list ap);
+ssize_t	i_func(va_list ap);
+ssize_t	u_func(va_list ap);
+ssize_t	xl_func(va_list ap);
+ssize_t	xu_func(va_list ap);
+ssize_t	percent_func(va_list ap);
+void	set_func_num(int *to_func_num);
+void	set_num_to_func(ssize_t	(*num_to_func[9])());
+int		is_error(const char *format, int *to_func_num);
+int		print_format(const char *format, va_list ap, \
+		int *to_func_num, ssize_t (*num_to_func[9])(va_list));
+int		ft_printf(const char *format, ...);
 
 #endif //FT_PRINTF_H

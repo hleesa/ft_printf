@@ -5,23 +5,29 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/02 11:02:22 by salee2            #+#    #+#             */
-/*   Updated: 2022/08/03 11:57:26 by salee2           ###   ########.fr       */
+/*   Created: 2022/08/05 16:34:02 by salee2            #+#    #+#             */
+/*   Updated: 2022/08/05 16:37:01 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*u_func(va_list ap)
+ssize_t	u_func(va_list ap)
 {
+	ssize_t			ret;
 	unsigned int	u;
+	char			*str;
 
 	u = va_arg(ap, unsigned int);
-	return (ft_utoa(u));
+	str = ft_utoa(u);
+	ret = write(1, str, ft_strlen(str));
+	free(str);
+	return (ret);
 }
 
-char	*xl_func(va_list ap)
+ssize_t	xl_func(va_list ap)
 {
+	ssize_t			ret;
 	unsigned int	u;
 	int				idx;
 	char			hex[HEX_LEN];
@@ -30,17 +36,20 @@ char	*xl_func(va_list ap)
 	u = va_arg(ap, unsigned int);
 	ft_bzero(hex, HEX_LEN);
 	idx = HEX_LEN - 1;
-	while (u)
+	if (u == 0)
+		hex[--idx] = to_hex[0];
+	while (idx > 0 && u)
 	{
-		--idx;
-		hex[idx] = to_hex[u % 16];
+		hex[--idx] = to_hex[u % 16];
 		u /= 16;
 	}
-	return (ft_strdup(hex + idx));
+	ret = write(1, hex + idx, ft_strlen(hex + idx));
+	return (ret);
 }
 
-char	*xu_func(va_list ap)
+ssize_t	xu_func(va_list ap)
 {
+	ssize_t			ret;
 	unsigned int	u;
 	int				idx;
 	char			hex[HEX_LEN];
@@ -49,16 +58,23 @@ char	*xu_func(va_list ap)
 	u = va_arg(ap, unsigned int);
 	ft_bzero(hex, HEX_LEN);
 	idx = HEX_LEN - 1;
-	while (u)
+	if (u == 0)
+		hex[--idx] = to_hex[0];
+	while (idx > 0 && u)
 	{
-		--idx;
-		hex[idx] = to_hex[u % 16];
+		hex[--idx] = to_hex[u % 16];
 		u /= 16;
 	}
-	return (ft_strdup(hex + idx));
+	ret = write(1, hex + idx, ft_strlen(hex + idx));
+	return (ret);
 }
 
-char	*percnet_func(void)
+ssize_t	percent_func(va_list ap)
 {
-	return (ft_strdup("%"));
+	ssize_t	ret;
+
+	if (ap == NULL)
+		return (-1);
+	ret = write(1, "%", 1);
+	return (ret);
 }

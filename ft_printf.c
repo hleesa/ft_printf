@@ -6,12 +6,11 @@
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 17:23:10 by salee2            #+#    #+#             */
-/*   Updated: 2022/08/03 15:06:47 by salee2           ###   ########.fr       */
+/*   Updated: 2022/08/05 18:03:21 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
 void	set_func_num(int *to_func_num)
 {
@@ -29,7 +28,7 @@ void	set_func_num(int *to_func_num)
 	return ;
 }
 
-void	set_num_to_func(char *(*num_to_func[9])())
+void	set_num_to_func(ssize_t	(*num_to_func[9])())
 {
 	num_to_func[0] = c_func;
 	num_to_func[1] = s_func;
@@ -39,7 +38,7 @@ void	set_num_to_func(char *(*num_to_func[9])())
 	num_to_func[5] = u_func;
 	num_to_func[6] = xl_func;
 	num_to_func[7] = xu_func;
-	num_to_func[8] = percnet_func;
+	num_to_func[8] = percent_func;
 	return ;
 }
 
@@ -55,7 +54,8 @@ int	is_error(const char *format, int *to_func_num)
 	{
 		if (format[idx] == '%')
 		{
-			if (idx + 1 == len || to_func_num[((const unsigned char *)format)[idx]] == -1)
+			if (++idx == len || \
+					to_func_num[((const unsigned char *)format)[idx]] == -1)
 				return (1);
 		}
 		++idx;
@@ -63,32 +63,49 @@ int	is_error(const char *format, int *to_func_num)
 	return (0);
 }
 
+int	print_format(const char *format, va_list ap, \
+		int *to_func_num, ssize_t (*num_to_func[9])(va_list))
+{
+	ssize_t			print_byte;
+	ssize_t			print_total_byte;
+	size_t			idx;
+	const size_t	format_len = ft_strlen(format);
+	int				num_of_func;
+
+	print_byte = 0;
+	print_total_byte = 0;
+	idx = 0;
+	while (idx < format_len)
+	{
+		if (format[idx] == '%')
+		{
+			num_of_func = to_func_num[((const unsigned char *)format)[idx + 1]];
+			print_byte = num_to_func[num_of_func](ap);
+			++idx;
+		}
+		else
+			print_byte = write(1, format + idx, 1);
+		if (print_byte == -1)
+			return (-1);
+		print_total_byte += print_byte;
+		++idx;
+	}
+	return (print_total_byte);
+}
 
 int	ft_printf(const char *format, ...)
 {
-	va_list			ap;
-	int				to_func_num[256];
-	char			*(*num_to_func[9])(va_list);
-	size_t			idx;
-	const size_t	format_len = ft_strlen(format);
+	ssize_t		ret;
+	va_list		ap;
+	int			to_func_num[256];
+	ssize_t		(*num_to_func[9])(va_list);
 
 	set_func_num(to_func_num);
 	set_num_to_func(num_to_func);
 	if (is_error(format, to_func_num))
 		return (-1);
 	va_start(ap, format);
-	idx = 0;
-	while (idx < format_len)
-	{
-		if (format[idx] == '%')
-		{
-			ft_putstr_fd(num_to_func[to_func_num[((const unsigned char *)format)[idx + 1]]](ap), 1);
-			++idx;
-		}
-		else
-			ft_putchar_fd(format[idx], 1);
-		++idx;
-	}
+	ret = print_format(format, ap, to_func_num, num_to_func);
 	va_end(ap);
-	return (0);
+	return (ret);
 }
