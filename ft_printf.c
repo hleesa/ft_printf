@@ -6,7 +6,7 @@
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 17:23:10 by salee2            #+#    #+#             */
-/*   Updated: 2022/08/05 18:03:21 by salee2           ###   ########.fr       */
+/*   Updated: 2022/08/06 10:37:05 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,11 @@ int	print_format(const char *format, va_list ap, \
 
 int	ft_printf(const char *format, ...)
 {
-	ssize_t		ret;
-	va_list		ap;
-	int			to_func_num[256];
-	ssize_t		(*num_to_func[9])(va_list);
+	ssize_t	ret;
+	va_list	ap;
+	int		to_func_num[256];
 
+	ssize_t (*num_to_func[9])(va_list);
 	set_func_num(to_func_num);
 	set_num_to_func(num_to_func);
 	if (is_error(format, to_func_num))
