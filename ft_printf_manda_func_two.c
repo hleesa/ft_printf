@@ -43,6 +43,8 @@ ssize_t	p_func(va_list ap)
 
 	addr = va_arg(ap, unsigned long long);
 	hex_addr = itoh(addr, to_hex, 1);
+	if (hex_addr == 0)
+		return (-1);
 	ret = write(1, hex_addr, ft_strlen(hex_addr));
 	free(hex_addr);
 	return (ret);
@@ -57,6 +59,8 @@ ssize_t	xl_func(va_list ap)
 
 	u = va_arg(ap, unsigned int);
 	hex = itoh(u, to_hex, 0);
+	if (hex == 0)
+		return (-1);
 	ret = write(1, hex, ft_strlen(hex));
 	free(hex);
 	return (ret);
@@ -71,6 +75,8 @@ ssize_t	xu_func(va_list ap)
 
 	u = va_arg(ap, unsigned int);
 	hex = itoh(u, to_hex, 0);
+	if (hex == 0)
+		return (-1);
 	ret = write(1, hex, ft_strlen(hex));
 	free(hex);
 	return (ret);

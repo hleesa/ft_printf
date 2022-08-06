@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: salee2 <salee2n@student.42seoul.k>         +#+  +:+       +#+         #
+#    By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/07/13 12:29:43 by salee2            #+#    #+#              #
-#    Updated: 2022/07/15 15:43:06 by salee2           ###   ########.fr        #
+#    Created: 2022/08/06 13:40:31 by salee2            #+#    #+#              #
+#    Updated: 2022/08/06 13:40:33 by salee2           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,14 +33,12 @@ $(NAME): $(OBJS_M)
 	cp $(LIBFTDIR)/$(LIBFTFILE) $(NAME)
 	$(AR) $@ $?
 
-bonus:
-
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
 	make -C $(LIBFTDIR) clean
-	$(RM) $(OBJS_M) $(OBJS_B)
+	$(RM) $(OBJS_M)
 
 fclean: clean
 	make -C $(LIBFTDIR) fclean

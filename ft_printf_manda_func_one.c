@@ -42,6 +42,8 @@ ssize_t	d_func(va_list ap)
 
 	d = va_arg(ap, int);
 	d_str = ft_itoa(d);
+	if (d_str == 0)
+		return (-1);
 	ret = write(1, d_str, ft_strlen(d_str));
 	free(d_str);
 	return (ret);
@@ -60,6 +62,8 @@ ssize_t	u_func(va_list ap)
 
 	u = va_arg(ap, unsigned int);
 	u_str = ft_utoa(u);
+	if (u_str == 0)
+		return (-1);
 	ret = write(1, u_str, ft_strlen(u_str));
 	free(u_str);
 	return (ret);
