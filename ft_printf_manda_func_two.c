@@ -14,8 +14,8 @@
 
 ssize_t	u_func(va_list ap)
 {
-	ssize_t			ret;
 	unsigned int	u;
+	ssize_t			ret;
 	char			*str;
 
 	u = va_arg(ap, unsigned int);
@@ -27,45 +27,45 @@ ssize_t	u_func(va_list ap)
 
 ssize_t	xl_func(va_list ap)
 {
-	ssize_t			ret;
+	int				i;
 	unsigned int	u;
-	int				idx;
+	ssize_t			ret;
 	char			hex[HEX_LEN];
 	const char		*to_hex = "0123456789abcdef";
 
 	u = va_arg(ap, unsigned int);
 	ft_bzero(hex, HEX_LEN);
-	idx = HEX_LEN - 1;
+	i = HEX_LEN - 1;
 	if (u == 0)
-		hex[--idx] = to_hex[0];
-	while (idx > 0 && u)
+		hex[--i] = to_hex[0];
+	while (u)
 	{
-		hex[--idx] = to_hex[u % 16];
+		hex[--i] = to_hex[u % 16];
 		u /= 16;
 	}
-	ret = write(1, hex + idx, ft_strlen(hex + idx));
+	ret = write(1, hex + i, ft_strlen(hex + i));
 	return (ret);
 }
 
 ssize_t	xu_func(va_list ap)
 {
-	ssize_t			ret;
+	int				i;
 	unsigned int	u;
-	int				idx;
+	ssize_t			ret;
 	char			hex[HEX_LEN];
 	const char		*to_hex = "0123456789ABCDEF";
 
 	u = va_arg(ap, unsigned int);
 	ft_bzero(hex, HEX_LEN);
-	idx = HEX_LEN - 1;
+	i = HEX_LEN - 1;
 	if (u == 0)
-		hex[--idx] = to_hex[0];
-	while (idx > 0 && u)
+		hex[--i] = to_hex[0];
+	while (u)
 	{
-		hex[--idx] = to_hex[u % 16];
+		hex[--i] = to_hex[u % 16];
 		u /= 16;
 	}
-	ret = write(1, hex + idx, ft_strlen(hex + idx));
+	ret = write(1, hex + i, ft_strlen(hex + i));
 	return (ret);
 }
 

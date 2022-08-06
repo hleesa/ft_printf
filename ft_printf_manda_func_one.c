@@ -14,8 +14,8 @@
 
 ssize_t	c_func(va_list ap)
 {
-	ssize_t	ret;
 	char	c;
+	ssize_t	ret;
 
 	c = va_arg(ap, int);
 	ret = write(1, &c, 1);
@@ -36,32 +36,32 @@ ssize_t	s_func(va_list ap)
 
 ssize_t	p_func(va_list ap)
 {
+	int					i;
 	ssize_t				ret;
 	unsigned long long	addr;
-	int					idx;
 	char				hex_addr[HEX_ADDR_LEN];
 	const char			*to_hex = "0123456789abcdef";
 
 	addr = va_arg(ap, unsigned long long);
 	ft_bzero(hex_addr, HEX_ADDR_LEN);
-	idx = HEX_ADDR_LEN - 1;
+	i = HEX_ADDR_LEN - 1;
 	if (addr == 0)
-		hex_addr[--idx] = to_hex[0];
-	while (idx > 0 && addr)
+		hex_addr[--i] = to_hex[0];
+	while (addr)
 	{
-		hex_addr[--idx] = to_hex[addr % 16];
+		hex_addr[--i] = to_hex[addr % 16];
 		addr /= 16;
 	}
-	hex_addr[--idx] = 'x';
-	hex_addr[--idx] = '0';
-	ret = write(1, hex_addr + idx, ft_strlen(hex_addr + idx));
+	hex_addr[--i] = 'x';
+	hex_addr[--i] = '0';
+	ret = write(1, hex_addr + i, ft_strlen(hex_addr + i));
 	return (ret);
 }
 
 ssize_t	d_func(va_list ap)
 {
-	ssize_t	ret;
 	int		d;
+	ssize_t	ret;
 	char	*str;
 
 	d = va_arg(ap, int);
