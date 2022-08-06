@@ -6,66 +6,73 @@
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 16:34:02 by salee2            #+#    #+#             */
-/*   Updated: 2022/08/05 16:37:01 by salee2           ###   ########.fr       */
+/*   Updated: 2022/08/06 11:07:07 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-ssize_t	u_func(va_list ap)
+char	*itoh(unsigned long long num, const char *to_hex, int is_addr)
 {
-	unsigned int	u;
-	ssize_t			ret;
-	char			*str;
+	int		i;
+	char	hex[HEX_LEN];
 
-	u = va_arg(ap, unsigned int);
-	str = ft_utoa(u);
-	ret = write(1, str, ft_strlen(str));
-	free(str);
+	ft_bzero(hex, HEX_LEN);
+	i = HEX_LEN - 1;
+	if (num == 0)
+		hex[--i] = to_hex[0];
+	while (num)
+	{
+		hex[--i] = to_hex[num % 16];
+		num /= 16;
+	}
+	if (is_addr)
+	{
+		hex[--i] = 'x';
+		hex[--i] = '0';
+	}
+	return (ft_strdup(hex + i));
+}
+
+ssize_t	p_func(va_list ap)
+{
+	ssize_t				ret;
+	unsigned long long	addr;
+	char				*hex_addr;
+	const char			*to_hex = "0123456789abcdef";
+
+	addr = va_arg(ap, unsigned long long);
+	hex_addr = itoh(addr, to_hex, 1);
+	ret = write(1, hex_addr, ft_strlen(hex_addr));
+	free(hex_addr);
 	return (ret);
 }
 
 ssize_t	xl_func(va_list ap)
 {
-	int				i;
-	unsigned int	u;
 	ssize_t			ret;
-	char			hex[HEX_LEN];
+	unsigned int	u;
+	char			*hex;
 	const char		*to_hex = "0123456789abcdef";
 
 	u = va_arg(ap, unsigned int);
-	ft_bzero(hex, HEX_LEN);
-	i = HEX_LEN - 1;
-	if (u == 0)
-		hex[--i] = to_hex[0];
-	while (u)
-	{
-		hex[--i] = to_hex[u % 16];
-		u /= 16;
-	}
-	ret = write(1, hex + i, ft_strlen(hex + i));
+	hex = itoh(u, to_hex, 0);
+	ret = write(1, hex, ft_strlen(hex));
+	free(hex);
 	return (ret);
 }
 
 ssize_t	xu_func(va_list ap)
 {
-	int				i;
-	unsigned int	u;
 	ssize_t			ret;
-	char			hex[HEX_LEN];
+	unsigned int	u;
+	char			*hex;
 	const char		*to_hex = "0123456789ABCDEF";
 
 	u = va_arg(ap, unsigned int);
-	ft_bzero(hex, HEX_LEN);
-	i = HEX_LEN - 1;
-	if (u == 0)
-		hex[--i] = to_hex[0];
-	while (u)
-	{
-		hex[--i] = to_hex[u % 16];
-		u /= 16;
-	}
-	ret = write(1, hex + i, ft_strlen(hex + i));
+	hex = itoh(u, to_hex, 0);
+	ret = write(1, hex, ft_strlen(hex));
+	free(hex);
 	return (ret);
 }
 

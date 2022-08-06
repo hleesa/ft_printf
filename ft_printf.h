@@ -6,7 +6,7 @@
 /*   By: salee2 <salee2@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 20:01:24 by salee2            #+#    #+#             */
-/*   Updated: 2022/08/05 16:38:59 by salee2           ###   ########.fr       */
+/*   Updated: 2022/08/06 11:05:42 by salee2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 # include <stdarg.h>
 # include "libft/libft.h"
 
-# define HEX_LEN 9
-# define HEX_ADDR_LEN 19
+# define HEX_LEN 19
 
 ssize_t	c_func(va_list ap);
 ssize_t	s_func(va_list ap);
@@ -33,6 +32,7 @@ void	set_num_to_func(ssize_t	(*num_to_func[9])());
 int		is_error(const char *format, int *to_func_num);
 int		print_format(const char *format, va_list ap, \
 		int *to_func_num, ssize_t (*num_to_func[9])(va_list));
+char	*itoh(unsigned long long num, const char *to_hex, int is_add_0x);
 int		ft_printf(const char *format, ...);
 
 #endif //FT_PRINTF_H
