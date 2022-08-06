@@ -23,7 +23,7 @@ SRCS = \
 	ft_printf.c \
 	ft_printf_manda_func_one.c \
 	ft_printf_manda_func_two.c \
-	ft_printf_manda_func_three.c
+	ft_printf_manda_func_three.c \
 
 OBJS_M = $(SRCS:.c=.o)
 
