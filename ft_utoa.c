@@ -27,14 +27,14 @@ size_t	get_u_size(unsigned int n)
 	return (size);
 }
 
-void	to_u_string(unsigned int n, char *str, size_t idx, size_t len)
+void	to_u_string(unsigned int n, char *str, size_t idx)
 {
 	if (n < 10)
 	{
 		str[idx] = n + '0';
 		return ;
 	}
-	to_u_string(n / 10, str, idx - 1, len);
+	to_u_string(n / 10, str, idx - 1);
 	str[idx] = n % 10 + '0';
 	return ;
 }
@@ -47,7 +47,7 @@ char	*ft_utoa(unsigned int n)
 	ret = (char *) malloc(size + 1);
 	if (ret == 0)
 		return (0);
-	to_u_string(n, ret, size - 1, size);
+	to_u_string(n, ret, size - 1);
 	ret[size] = '\0';
 	return (ret);
 }
