@@ -41,7 +41,7 @@ ssize_t	p_func(va_list ap)
 	char				*hex_addr;
 	const char			*to_hex = "0123456789abcdef";
 
-	addr = va_arg(ap, unsigned long long);
+	addr = (unsigned long long)va_arg(ap, void *);
 	hex_addr = itoh(addr, to_hex, 1);
 	if (hex_addr == 0)
 		return (-1);
