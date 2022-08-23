@@ -27,7 +27,7 @@ size_t	get_u_size(unsigned int n)
 	return (size);
 }
 
-void	to_u_string(unsigned	int n, char *str, size_t idx, size_t len)
+void	to_u_string(unsigned int n, char *str, size_t idx, size_t len)
 {
 	if (n < 10)
 	{

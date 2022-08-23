@@ -67,30 +67,29 @@ int	print_format(const char *format, va_list ap, \
 		int *to_func_num, ssize_t (*num_to_func[9])(va_list))
 {
 	size_t			i;
-	ssize_t			print_byte;
-	ssize_t			print_total_byte;
+	ssize_t			printed_byte;
+	ssize_t			printed_total_byte;
 	const size_t	format_len = ft_strlen(format);
 	int				num_of_func;
 
 	i = 0;
-	print_byte = 0;
-	print_total_byte = 0;
+	printed_total_byte = 0;
 	while (i < format_len)
 	{
 		if (format[i] == '%')
 		{
 			num_of_func = to_func_num[((const unsigned char *)format)[i + 1]];
-			print_byte = num_to_func[num_of_func](ap);
+			printed_byte = num_to_func[num_of_func](ap);
 			++i;
 		}
 		else
-			print_byte = write(1, format + i, 1);
-		if (print_byte == -1)
+			printed_byte = write(1, format + i, 1);
+		if (printed_byte == -1)
 			return (-1);
-		print_total_byte += print_byte;
+		printed_total_byte += printed_byte;
 		++i;
 	}
-	return (print_total_byte);
+	return (printed_total_byte);
 }
 
 int	ft_printf(const char *format, ...)

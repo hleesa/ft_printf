@@ -33,7 +33,7 @@ int		is_error(const char *format, int *to_func_num);
 int		print_format(const char *format, va_list ap, \
 		int *to_func_num, ssize_t (*num_to_func[9])(va_list));
 char	*ft_utoa(unsigned int n);
-char	*itoh(unsigned long long num, const char *to_hex, int is_add_0x);
+char	*itoh(unsigned long long num, const char *to_hex, int is_addr);
 int		ft_printf(const char *format, ...);
 
 #endif //FT_PRINTF_H
